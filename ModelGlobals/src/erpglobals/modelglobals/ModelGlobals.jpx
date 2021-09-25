@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE JboProject SYSTEM "jbo_03_01.dtd">
+<!---->
+<JboProject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ModelGlobals"
+  Version="12.1.3.10.47"
+  SeparateXMLFiles="true"
+  PackageName="erpglobals.modelglobals">
+  <DesignTime>
+    <Attr Name="_useAnsiJoinSyntax" Value="true"/>
+    <Attr Name="_jprName" Value="../../../ModelGlobals.jpr"/>
+    <Attr Name="_jbo.SQLBuilder" Value="SQL92"/>
+    <Attr Name="_jbo.TypeMapEntries" Value="Java"/>
+    <Attr Name="_NamedConnection" Value="ERPConnGlobals"/>
+    <Attr Name="_appModuleNames0" Value="erpglobals.modelglobals.globalsam.ERPGlobalsModule"/>
+    <Attr Name="_domainNames0" Value="erpglobals.modelglobals.globalsqvo.Type"/>
+  </DesignTime>
+  <Containee
+    Name="globalsam"
+    PackageName="erpglobals.modelglobals.globalsam"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_AM" Value="true"/>
+    </DesignTime>
+  </Containee>
+  <Containee
+    Name="globalsasso"
+    PackageName="erpglobals.modelglobals.globalsasso"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_AS" Value="true"/>
+    </DesignTime>
+  </Containee>
+  <Containee
+    Name="globalseo"
+    PackageName="erpglobals.modelglobals.globalseo"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_EO" Value="true"/>
+    </DesignTime>
+  </Containee>
+  <Containee
+    Name="globalsqvo"
+    PackageName="erpglobals.modelglobals.globalsqvo"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_VO" Value="true"/>
+      <Attr Name="_DO" Value="true"/>
+    </DesignTime>
+  </Containee>
+  <Containee
+    Name="globalsvl"
+    PackageName="erpglobals.modelglobals.globalsvl"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_VL" Value="true"/>
+    </DesignTime>
+  </Containee>
+  <Containee
+    Name="globalsvo"
+    PackageName="erpglobals.modelglobals.globalsvo"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_VO" Value="true"/>
+    </DesignTime>
+  </Containee>
+</JboProject>

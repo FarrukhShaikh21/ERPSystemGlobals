@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+<AppModule
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ERPGlobalsModule"
+  Version="12.1.3.10.47"
+  InheritPersonalization="merge"
+  ClearCacheOnRollback="true">
+  <ViewUsage
+    Name="ErpUserPolicyInformationRO"
+    ViewObjectName="erpglobals.modelglobals.globalsqvo.ErpUserPolicyInformationQVO"/>
+  <ViewUsage
+    Name="SysUsersRO"
+    ViewObjectName="erpglobals.modelglobals.globalsvo.SysUsersVO">
+    <ViewCriteriaUsage
+      Name="SysUsersUserWiseVC"
+      FullName="erpglobals.modelglobals.globalsvo.SysUsersVO.SysUsersUserWiseVC"/>
+  </ViewUsage>
+  <ViewUsage
+    Name="SysUsersVO1"
+    ViewObjectName="erpglobals.modelglobals.globalsvo.SysUsersVO"/>
+  <ViewUsage
+    Name="ErpUserCompanyAccessRO"
+    ViewObjectName="erpglobals.modelglobals.globalsqvo.ErpUserCompanyAccessQVO"/>
+  <ViewUsage
+    Name="ERPOracleDepartmentAccessQVO1"
+    ViewObjectName="erpglobals.modelglobals.globalsqvo.ERPOracleDepartmentAccessQVO"/>
+  <ViewUsage
+    Name="ERPDualTableForDepartmentRO"
+    ViewObjectName="erpglobals.modelglobals.globalsqvo.ERPDualTableForDepartmentQVO"/>
+  <ViewUsage
+    Name="AdminReportParameterVO1"
+    ViewObjectName="erpglobals.modelglobals.globalsvo.AdminReportParameterVO"/>
+  <ViewUsage
+    Name="ERPVwSysUsersModuleReportQVO1"
+    ViewObjectName="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO"/>
+</AppModule>

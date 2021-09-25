@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TempAdminCompanyAccess"
+  Version="12.1.3.2.1"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="TEMP_ADMIN_COMPANY_ACCESS"
+  AliasName="TempAdminCompanyAccess"
+  BindingStyle="JDBC">
+  <Attribute
+    Name="CompanyId"
+    IsNotNull="true"
+    Precision="10"
+    Scale="0"
+    ColumnName="COMPANY_ID"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="UserId"
+    Precision="10"
+    Scale="0"
+    ColumnName="USER_ID"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS"/>
+  <Attribute
+    Name="GlobalCompanyId"
+    Precision="10"
+    Scale="0"
+    ColumnName="GLOBAL_COMPANY_ID"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS"/>
+  <Attribute
+    Name="CompanyTypeSno"
+    Precision="5"
+    Scale="0"
+    ColumnName="COMPANY_TYPE_SNO"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS"/>
+  <Attribute
+    Name="QueryNo"
+    Precision="2"
+    Scale="0"
+    ColumnName="QUERY_NO"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="ParentCompCode"
+    Precision="10"
+    Scale="0"
+    ColumnName="PARENT_COMP_CODE"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS"/>
+  <Attribute
+    Name="ModuleAction"
+    Precision="10"
+    ColumnName="MODULE_ACTION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CreatedBy"
+    Precision="5"
+    Scale="0"
+    ColumnName="CREATED_BY"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS"/>
+  <Attribute
+    Name="CreatedDate"
+    ColumnName="CREATED_DATE"
+    SQLType="DATE"
+    Type="java.sql.Date"
+    ColumnType="DATE"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS"
+    IsNotNull="true"/>
+  <Attribute
+    Name="CompanyHierarchyPath"
+    Precision="200"
+    ColumnName="COMPANY_HIERARCHY_PATH"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="TypeHierarchyPath"
+    Precision="200"
+    ColumnName="TYPE_HIERARCHY_PATH"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="TEMP_ADMIN_COMPANY_ACCESS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </Attribute>
+  <Key
+    Name="TempAdminCompanyAccessCreatedDateCheck">
+    <DesignTime>
+      <Attr Name="_isNotNull" Value="true"/>
+      <Attr Name="_DBObjectName" Value="TEMP_ADMIN_COMPANY_ACCESS_CREA"/>
+      <Attr Name="_checkCondition" Value='"CREATED_DATE" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="erpglobals.modelglobals.globalseo.TempAdminCompanyAccess.CreatedDate"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="TempadmincompanyaccessPrimaryKey"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="TEMPADMINCOMPANYACCESS_PRIMARY"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="erpglobals.modelglobals.globalseo.TempAdminCompanyAccess.CompanyId"/>
+      <Item Value="erpglobals.modelglobals.globalseo.TempAdminCompanyAccess.QueryNo"/>
+    </AttrArray>
+  </Key>
+</Entity>

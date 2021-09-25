@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewLink SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewLink
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AdminUiCompAdminReportParaUiComponentSnoVL"
+  Version="12.1.3.10.47"
+  InheritPersonalization="merge"
+  EntityAssociation="erpglobals.modelglobals.globalsasso.AdminUiCompAdminReportParaUiComponentSnoAsso">
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="erpglobals.modelglobals.globalsvl.AdminUiCompAdminReportParaUiComponentSnoVL_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewLinkDefEnd
+    Name="AdminUiComponentVO"
+    Cardinality="1"
+    Source="true"
+    Owner="erpglobals.modelglobals.globalsvo.AdminUiComponentVO">
+    <DesignTime>
+      <Attr Name="_accessor" Value="true"/>
+      <Attr Name="_finderName" Value="AdminUiComponentVO"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="erpglobals.modelglobals.globalsvo.AdminUiComponentVO.UiComponentSno"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ViewLinkDefEnd
+    Name="AdminReportParameterVO"
+    Cardinality="-1"
+    Owner="erpglobals.modelglobals.globalsvo.AdminReportParameterVO">
+    <DesignTime>
+      <Attr Name="_finderName" Value="AdminReportParameterVO"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="erpglobals.modelglobals.globalsvo.AdminReportParameterVO.UiComponentSno"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="erpglobals.modelglobals.ModelGlobalsBundle"/>
+  </ResourceBundle>
+</ViewLink>

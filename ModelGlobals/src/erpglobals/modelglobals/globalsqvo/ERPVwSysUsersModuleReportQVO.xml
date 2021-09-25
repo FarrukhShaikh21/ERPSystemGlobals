@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ERPVwSysUsersModuleReportQVO"
+  Version="12.1.3.2.1"
+  InheritPersonalization="merge"
+  BindingStyle="JDBC"
+  CustomQuery="true"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="P_ADF_USER_ID"
+    Kind="where"
+    Type="java.lang.Integer">
+    <AttrArray Name="ExtendedDataInts">
+      <Item Value="0"/>
+    </AttrArray>
+  </Variable>
+  <Variable
+    Name="P_ADF_MODULE_ID"
+    Kind="where"
+    Type="java.lang.String">
+    <AttrArray Name="ExtendedDataInts">
+      <Item Value="1"/>
+    </AttrArray>
+  </Variable>
+  <SQLQuery><![CDATA[SELECT PK PK,             
+USER_ID AS USER_ID,             
+USER_CODE AS USER_CODE,             
+USER_NAME AS USER_NAME,             
+MODULE_ID AS MODULE_ID,             
+MODULE_DESCRIPTION AS MODULE_DESCRIPTION,             
+MODULE_ACTION AS MODULE_ACTION,             
+ACTION_NAME AS ACTION_NAME,             
+ACTION_TYPE,             
+MAX(ALLOW_PRINT) AS ALLOW_PRINT,             
+MAX(IS_ALLOW) AS IS_ALLOW,             
+MAX(ALLOW_ADD) AS ALLOW_ADD,             
+MAX(ALLOW_DELETE) AS ALLOW_DELETE,             
+MAX(ALLOW_EDIT) AS ALLOW_EDIT,             
+MAX(ALLOW_SUPERVISE) AS ALLOW_SUPERVISE,             
+MAX(ALLOW_UNSUPERVISE) AS ALLOW_UNSUPERVISE,             
+MAX(ALLOW_CANCEL) AS ALLOW_CANCEL,             
+MAX(ALLOW_EDIT_OTHER) AS ALLOW_EDIT_OTHER,             
+MAX(ACTION_GROUP_SNO) AS ACTION_GROUP_SNO,             
+MAX(ACTION_GROUP_CODE) AS ACTION_GROUP_CODE,             
+MAX(GROUP_DESCRIPTION) AS GROUP_DESCRIPTION,             
+SEQ,             
+ACTION_RUNTIME,             
+ACTION_CATEGORY_ID             
+FROM VW_SYS_USERS_MODULE             
+WHERE USER_ID =?       
+AND ACTION_TYPE = 'R'       
+AND MODULE_ID = ?      
+GROUP BY PK,             
+USER_ID,             
+USER_CODE,             
+MODULE_ACTION,             
+ACTION_NAME,             
+ACTION_TYPE,             
+SEQ,             
+ACTION_RUNTIME,             
+ACTION_CATEGORY_ID,             
+USER_NAME,             
+MODULE_ID,             
+MODULE_DESCRIPTION             
+ORDER BY SEQ]]></SQLQuery>
+  <ViewAttribute
+    Name="Pk"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="22"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="PK"
+    Expression="PK"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UserId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="INT"
+    AliasName="USER_ID"
+    Expression="USER_ID"
+    SQLType="INTEGER">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="11"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.UserId_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UserCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="USER_CODE"
+    Expression="USER_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.UserCode_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UserName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="USER_NAME"
+    Expression="USER_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.UserName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ModuleId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="MODULE_ID"
+    Expression="MODULE_ID"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="5"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.ModuleId_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ModuleDescription"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="MODULE_DESCRIPTION"
+    Expression="MODULE_DESCRIPTION"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.ModuleDescription_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ModuleAction"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="10"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="MODULE_ACTION"
+    Expression="MODULE_ACTION"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.ModuleAction_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ActionName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ACTION_NAME"
+    Expression="ACTION_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.ActionName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ActionType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ACTION_TYPE"
+    Expression="ACTION_TYPE"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.ActionType_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AllowPrint"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ALLOW_PRINT"
+    Expression="ALLOW_PRINT"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="20"/>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.AllowPrint_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="IsAllow"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="IS_ALLOW"
+    Expression="IS_ALLOW"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.IsAllow_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AllowAdd"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ALLOW_ADD"
+    Expression="ALLOW_ADD"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.AllowAdd_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AllowDelete"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ALLOW_DELETE"
+    Expression="ALLOW_DELETE"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="20"/>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.AllowDelete_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AllowEdit"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ALLOW_EDIT"
+    Expression="ALLOW_EDIT"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.AllowEdit_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AllowSupervise"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ALLOW_SUPERVISE"
+    Expression="ALLOW_SUPERVISE"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="erpglobals.modelglobals.globalsqvo.ERPVwSysUsersModuleReportQVO.AllowSupervise_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AllowUnsupervise"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ALLOW_UNSUPERVISE"
+    Expression="ALLOW_UNSUPERVISE"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AllowCancel"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ALLOW_CANCEL"
+    Expression="ALLOW_CANCEL"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AllowEditOther"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ALLOW_EDIT_OTHER"
+    Expression="ALLOW_EDIT_OTHER"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ActionGroupSno"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
+    AliasName="ACTION_GROUP_SNO"
+    Expression="ACTION_GROUP_SNO"
+    SQLType="NUMERIC"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ActionGroupCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
+    AliasName="ACTION_GROUP_CODE"
+    Expression="ACTION_GROUP_CODE"
+    SQLType="NUMERIC"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="GroupDescription"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="18"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="GROUP_DESCRIPTION"
+    Expression="GROUP_DESCRIPTION"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="18"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Seq"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="DOUBLE"
+    AliasName="SEQ"
+    Expression="SEQ"
+    SQLType="NUMERIC"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ActionRuntime"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="ACTION_RUNTIME"
+    Expression="ACTION_RUNTIME"
+    SQLType="VARCHAR"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ActionCategoryId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="INT"
+    AliasName="ACTION_CATEGORY_ID"
+    Expression="ACTION_CATEGORY_ID"
+    SQLType="INTEGER"
+    IsQueriable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="11"/>
+    </DesignTime>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Pk"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="erpglobals.modelglobals.ModelGlobalsBundle"/>
+  </ResourceBundle>
+</ViewObject>

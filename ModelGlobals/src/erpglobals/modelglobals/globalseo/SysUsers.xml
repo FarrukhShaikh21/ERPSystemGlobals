@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="SysUsers"
+  Version="12.1.3.10.47"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="SYS_USERS"
+  AliasName="SysUsers"
+  BindingStyle="JDBC">
+  <Attribute
+    Name="UserId"
+    IsNotNull="true"
+    Precision="8"
+    Scale="0"
+    ColumnName="USER_ID"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SYS_USERS"
+    PrimaryKey="true"/>
+  <Attribute
+    Name="UserName"
+    IsNotNull="true"
+    Precision="100"
+    ColumnName="USER_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UserType"
+    IsNotNull="true"
+    Precision="1"
+    ColumnName="USER_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Passwordd"
+    IsNotNull="true"
+    Precision="50"
+    ColumnName="PASSWORDD"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="IsLock"
+    IsNotNull="true"
+    Precision="1"
+    ColumnName="IS_LOCK"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UserCode"
+    IsUnique="true"
+    IsNotNull="true"
+    Precision="50"
+    ColumnName="USER_CODE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ScanPath"
+    Precision="500"
+    ColumnName="SCAN_PATH"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="500"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Email"
+    Precision="50"
+    ColumnName="EMAIL"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="SavePath"
+    Precision="50"
+    ColumnName="SAVE_PATH"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="MobileNo"
+    Precision="15"
+    ColumnName="MOBILE_NO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="15"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CnicNo"
+    IsUnique="true"
+    Precision="20"
+    ColumnName="CNIC_NO"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LockDate"
+    ColumnName="LOCK_DATE"
+    SQLType="DATE"
+    Type="java.sql.Date"
+    ColumnType="DATE"
+    TableName="SYS_USERS"/>
+  <Attribute
+    Name="ExpiryDate"
+    ColumnName="EXPIRY_DATE"
+    SQLType="DATE"
+    Type="java.sql.Date"
+    ColumnType="DATE"
+    TableName="SYS_USERS"/>
+  <Attribute
+    Name="IsExpired"
+    Precision="1"
+    ColumnName="IS_EXPIRED"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="SYS_USERS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CitySno"
+    Precision="5"
+    Scale="0"
+    ColumnName="CITY_SNO"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SYS_USERS"/>
+  <Attribute
+    Name="CountrySno"
+    Precision="5"
+    Scale="0"
+    ColumnName="COUNTRY_SNO"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SYS_USERS"/>
+  <Attribute
+    Name="CreatedBy"
+    Precision="5"
+    Scale="0"
+    ColumnName="CREATED_BY"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    TableName="SYS_USERS"/>
+  <Attribute
+    Name="CreatedDate"
+    ColumnName="CREATED_DATE"
+    SQLType="DATE"
+    Type="java.sql.Timestamp"
+    ColumnType="DATE"
+    TableName="SYS_USERS"/>
+  <Attribute
+    Name="Dob"
+    ColumnName="DOB"
+    SQLType="DATE"
+    Type="java.sql.Date"
+    ColumnType="DATE"
+    TableName="SYS_USERS"/>
+  <Attribute
+    Name="LastLoginDate"
+    ColumnName="LAST_LOGIN_DATE"
+    SQLType="DATE"
+    Type="java.sql.Date"
+    ColumnType="DATE"
+    TableName="SYS_USERS"/>
+  <Key
+    Name="PkSysUsers"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="PK_SYS_USERS"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="erpglobals.modelglobals.globalseo.SysUsers.UserId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="UnqSysUserCnic">
+    <DesignTime>
+      <Attr Name="_isUnique" Value="true"/>
+      <Attr Name="_DBObjectName" Value="UNQ_SYS_USER_CNIC"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="erpglobals.modelglobals.globalseo.SysUsers.CnicNo"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="UnqSysUsers">
+    <DesignTime>
+      <Attr Name="_isUnique" Value="true"/>
+      <Attr Name="_DBObjectName" Value="UNQ_SYS_USERS"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="erpglobals.modelglobals.globalseo.SysUsers.UserCode"/>
+    </AttrArray>
+  </Key>
+</Entity>

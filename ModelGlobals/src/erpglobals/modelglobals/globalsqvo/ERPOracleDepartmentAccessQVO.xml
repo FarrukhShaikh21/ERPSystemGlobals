@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ERPOracleDepartmentAccessQVO"
+  Version="12.1.3.2.1"
+  InheritPersonalization="merge"
+  BindingStyle="JDBC"
+  CustomQuery="true"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="erpglobals.modelglobals.globalsqvo.ERPOracleDepartmentAccessQVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="P_ADF_COMPANY_ID"
+    Kind="where"
+    Type="java.lang.Integer">
+    <AttrArray Name="ExtendedDataInts">
+      <Item Value="0"/>
+    </AttrArray>
+  </Variable>
+  <Variable
+    Name="P_ADF_GLOBAL_COMPANY_ID"
+    Kind="where"
+    Type="java.lang.Integer">
+    <AttrArray Name="ExtendedDataInts">
+      <Item Value="1"/>
+    </AttrArray>
+  </Variable>
+  <SQLQuery><![CDATA[SELECT COMP_CODE AS COMP_CODE,  
+       COMPANY_NAME AS COMPANY_NAME,  
+       PARENT_COMP_CODE AS PARENT_COMP_CODE,  
+       COMPANY_TYPE_SNO AS COMPANY_TYPE_SNO,  
+       GLOBAL_COMP_CODE AS GLOBAL_COMP_CODE,  
+       TYPE_LEVEL       AS TYPE_LEVEL  ,
+       COMPANY_HIERARCHY_PATH AS COMPANY_HIERARCHY_PATH,
+       TYPE_HIERARCHY_PATH AS TYPE_HIERARCHY_PATH
+FROM  
+(  
+SELECT C.COMP_CODE,  
+       C.COMPANY_NAME,  
+       C.PARENT_COMP_CODE,  
+       C.COMPANY_TYPE_SNO,  
+       C.GLOBAL_COMP_CODE,  
+       ADC.TYPE_LEVEL  ,
+       C.COMPANY_HIERARCHY_PATH,
+       ADC.TYPE_HIERARCHY_PATH       
+FROM   ADMIN_COMPANY C,  
+       ADMIN_COMPANY_TYPE ADC,
+       (select gp.parameter_value 
+        from   gl_parameter gp 
+        where  gp.parameter_id='DEPARTMENT_SNO' 
+        and gp.company_id=?
+        )vw_dep
+WHERE  C.ACTIVE='Y'
+AND    ADC.COMPANY_GROUP_SNO=6  
+AND    C.COMPANY_TYPE_SNO=ADC.COMPANY_TYPE_SNO
+AND    C.COMPANY_HIERARCHY_PATH LIKE CONCAT(vw_dep.parameter_value,'%')
+)vw_comp  
+where vw_comp.TYPE_LEVEL=(select max(t.type_level) from ADMIN_COMPANY_TYPE t where t.company_id=? AND T.COMPANY_GROUP_SNO=6)]]></SQLQuery>
+  <ViewAttribute
+    Name="CompCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
+    AliasName="COMP_CODE"
+    Expression="COMP_CODE"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="CompanyName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="COMPANY_NAME"
+    Expression="COMPANY_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ParentCompCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Scale="0"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="PARENT_COMP_CODE"
+    Expression="PARENT_COMP_CODE"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="CompanyTypeSno"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Scale="0"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="COMPANY_TYPE_SNO"
+    Expression="COMPANY_TYPE_SNO"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="GlobalCompCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="10"
+    Scale="0"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="GLOBAL_COMP_CODE"
+    Expression="GLOBAL_COMP_CODE"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="TypeLevel"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Scale="0"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="TYPE_LEVEL"
+    Expression="TYPE_LEVEL"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="CompanyHierarchyPath"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="COMPANY_HIERARCHY_PATH"
+    Expression="COMPANY_HIERARCHY_PATH"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TypeHierarchyPath"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TYPE_HIERARCHY_PATH"
+    Expression="TYPE_HIERARCHY_PATH"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="CompCode"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="erpglobals.modelglobals.ModelGlobalsBundle"/>
+  </ResourceBundle>
+</ViewObject>

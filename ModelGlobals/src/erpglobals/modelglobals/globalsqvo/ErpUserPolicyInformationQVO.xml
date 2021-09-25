@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ErpUserPolicyInformationQVO"
+  Version="12.1.3.10.47"
+  InheritPersonalization="merge"
+  BindingStyle="JDBC"
+  CustomQuery="true"
+  PageIterMode="Full"
+  RowClass="erpglobals.modelglobals.globalsqvo.ErpUserPolicyInformationQVORowImpl"
+  RowInterface="erpglobals.modelglobals.globalsqvo.common.ErpUserPolicyInformationQVORow"
+  ClientRowProxyName="erpglobals.modelglobals.globalsqvo.client.ErpUserPolicyInformationQVORowClient">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="erpglobals.modelglobals.globalsqvo.ErpUserPolicyInformationQVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="P_ADF_USER_ID"
+    Kind="where"
+    Type="java.lang.Integer">
+    <AttrArray Name="ExtendedDataInts">
+      <Item Value="0"/>
+    </AttrArray>
+    <TransientExpression
+      trustMode="untrusted"
+      Name="expression"><![CDATA[erpglobals.modelglobals.ERPGlobalPLSQLClass.doGetModelUserSno()]]></TransientExpression>
+  </Variable>
+  <SQLQuery><![CDATA[SELECT PP.PASSWORD_PARAMETER_SNO,                   
+       PP.PASSWORD_PARAMETER_NAME,                   
+       PP.PASSWORD_PARAMETER_VALUE,                   
+       PP.MESSAGE_ON_VALIDATION,                   
+       SU.USER_CODE                   
+  FROM SYS_PASSWORD_PARAMETER     PP,                   
+       SYS_USER_PASSWORD_POLICY   SUP,                   
+       SYS_PASSWORD_POLICY_HEADER PH,                   
+       SYS_PASSWORD_POLICY_LINES  PL,                   
+       SYS_USERS                  SU                   
+ WHERE SUP.USER_SNO = SU.USER_ID                   
+   AND SU.USER_ID = ?                
+   AND PH.POLICY_HEADER_SNO = SUP.POLICY_HEADER_SNO                   
+   AND PL.POLICY_HEADER_SNO = PH.POLICY_HEADER_SNO                   
+   AND PP.PASSWORD_PARAMETER_SNO = PL.PASSWORD_PARAMETER_SNO                   
+   AND PH.IS_SUPERVISED = 'Y'                   
+   AND PH.IS_ACTIVE = 'Y'                   
+   AND PL.IS_ACTIVE = 'Y'                   
+   AND PP.IS_DISPLAY_ON_EXPIRY_WINDOW='Y'      
+     ORDER BY PP.PASSWORD_PARAMETER_SNO]]></SQLQuery>
+  <ViewAttribute
+    Name="PasswordParameterSno"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    AliasName="PASSWORD_PARAMETER_SNO"
+    Expression="PASSWORD_PARAMETER_SNO"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="PasswordParameterName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PASSWORD_PARAMETER_NAME"
+    Expression="PASSWORD_PARAMETER_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PasswordParameterValue"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PASSWORD_PARAMETER_VALUE"
+    Expression="PASSWORD_PARAMETER_VALUE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MessageOnValidation"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MESSAGE_ON_VALIDATION"
+    Expression="MESSAGE_ON_VALIDATION"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UserCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="USER_CODE"
+    Expression="USER_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="txtNewPassword"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="txtConfirmPassword"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="txtStrength"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    AliasName="VIEW_ATTR"
+    SQLType="INTEGER"
+    DefaultValue="0"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="PasswordParameterSno"/>
+  </AttrArray>
+  <ClientRowInterface
+    Name="__rowClientInterface">
+    <Method
+      Name="doChangeERPPassword"
+      MethodName="doChangeERPPassword">
+      <Return
+        Name="_return_type_"
+        Type="void"/>
+    </Method>
+  </ClientRowInterface>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="erpglobals.modelglobals.ModelGlobalsBundle"/>
+  </ResourceBundle>
+</ViewObject>

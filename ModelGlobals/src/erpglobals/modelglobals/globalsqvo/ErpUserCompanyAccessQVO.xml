@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ErpUserCompanyAccessQVO"
+  Version="12.1.3.2.1"
+  InheritPersonalization="merge"
+  BindingStyle="JDBC"
+  CustomQuery="true"
+  PageIterMode="Full"
+  ComponentClass="erpglobals.modelglobals.globalsqvo.ErpUserCompanyAccessQVOImpl"
+  ComponentInterface="erpglobals.modelglobals.globalsqvo.common.ErpUserCompanyAccessQVO"
+  ClientProxyName="erpglobals.modelglobals.globalsqvo.client.ErpUserCompanyAccessQVOClient">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Coll|VarAccess"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="erpglobals.modelglobals.globalsqvo.ErpUserCompanyAccessQVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="P_ADF_USERID"
+    Kind="where"
+    Type="java.lang.Integer">
+    <AttrArray Name="ExtendedDataInts">
+      <Item Value="0"/>
+      <Item Value="2"/>
+      <Item Value="4"/>
+      <Item Value="9"/>
+      <Item Value="15"/>
+      <Item Value="17"/>
+      <Item Value="20"/>
+      <Item Value="24"/>
+    </AttrArray>
+    <TransientExpression
+      Name="expression"><![CDATA[erpglobals.modelglobals.ERPGlobalPLSQLClass.doGetModelUserSno()]]></TransientExpression>
+  </Variable>
+  <Variable
+    Name="P_ADF_MODULE_ACTION"
+    Kind="where"
+    Type="java.lang.String">
+    <AttrArray Name="ExtendedDataInts">
+      <Item Value="1"/>
+      <Item Value="3"/>
+      <Item Value="5"/>
+      <Item Value="6"/>
+      <Item Value="10"/>
+      <Item Value="11"/>
+      <Item Value="14"/>
+      <Item Value="16"/>
+      <Item Value="18"/>
+      <Item Value="19"/>
+      <Item Value="23"/>
+    </AttrArray>
+    <TransientExpression
+      trustMode="untrusted"
+      Name="expression"><![CDATA[erpglobals.modelglobals.ERPGlobalPLSQLClass.doGetErpModuleAction()]]></TransientExpression>
+  </Variable>
+  <Variable
+    Name="P_ADF_CURRENT_DATE"
+    Kind="where"
+    Type="java.sql.Timestamp">
+    <AttrArray Name="ExtendedDataInts">
+      <Item Value="7"/>
+      <Item Value="8"/>
+      <Item Value="12"/>
+      <Item Value="13"/>
+      <Item Value="21"/>
+      <Item Value="22"/>
+      <Item Value="25"/>
+      <Item Value="26"/>
+    </AttrArray>
+    <TransientExpression
+      Name="expression"><![CDATA[adf.currentDate]]></TransientExpression>
+  </Variable>
+  <ViewAccessor
+    Name="AccTempAdminCompanyAccessVO"
+    ViewObjectName="erpglobals.modelglobals.globalsvo.TempAdminCompanyAccessVO"
+    RowLevelBinds="true"/>
+  <SQLQuery><![CDATA[SELECT  SU.USER_ID,              
+        SU.USER_NAME,              
+        SU.USER_CODE,              
+        C.COMPANY_NAME,              
+        C.COMPANY_SHORT_NAME,              
+        C.COMPANY_SHORT_CODE,              
+        C.COMP_CODE,    
+        1 QUERY_NO,    
+        C.GLOBAL_COMP_CODE,    
+        C.COMPANY_TYPE_SNO , 
+        C.PARENT_COMP_CODE ,
+        C.COMPANY_HIERARCHY_PATH,
+        ACT.TYPE_HIERARCHY_PATH
+  FROM  ADMIN_COMPANY C,              
+        SYS_USER_GLOBAL_COMPANY SUGC,/*WHICH PARENT USER HAS IN CASE OF MULTIPLE GLOBALS*/              
+        SYS_USERS SU,              
+        ADMIN_COMPANY_TYPE ACT              
+ WHERE  C.GLOBAL_COMP_CODE = SUGC.COMPANY_ID              
+   AND  SUGC.USER_ID = SU.USER_ID              
+   AND  C.ACTIVE='Y'
+   AND  SUGC.IS_ACTIVE='Y'
+   AND  SUGC.IS_DEFAULT='Y'
+   AND  ACT.IS_ACTIVE='Y'
+   AND  SU.ACCESS_TYPE= 'A'
+   AND  ACT.COMPANY_GROUP_SNO=5
+   AND  ACT.COMPANY_TYPE_SNO=C.COMPANY_TYPE_SNO              
+   AND  ACT.TYPE_LEVEL=(SELECT MAX(AAA.TYPE_LEVEL)              
+                        FROM  ADMIN_COMPANY_TYPE AAA              
+                        WHERE AAA.COMPANY_ID=C.GLOBAL_COMP_CODE
+                        AND   AAA.IS_ACTIVE='Y'
+                        )              
+   AND  SU.USER_ID=?/*0*/              
+   AND  NOT EXISTS(              
+                   SELECT ''              
+                   FROM   SYS_USERS_MODULE SUMM              
+                   WHERE  SUMM.MODULE_ACTION=?/*1 CURRENT CONENCTING MODULE ID BIND VARIABLE*/              
+                   AND    SUMM.ACCESS_TYPE IN('N','S','A')              
+                   AND    SUMM.IS_ACTIVE='Y'              
+                   AND    SUMM.USER_ID=SU.USER_ID              
+                  )              
+UNION              
+/* SELECTED USER COMPANY*/              
+SELECT  SU.USER_ID,              
+        SU.USER_NAME,              
+        SU.USER_CODE,              
+        C.COMPANY_NAME,              
+        C.COMPANY_SHORT_NAME,              
+        C.COMPANY_SHORT_CODE,              
+        C.COMP_CODE,    
+        2 QUERY_NO,    
+        C.GLOBAL_COMP_CODE,    
+        C.COMPANY_TYPE_SNO, 
+        C.PARENT_COMP_CODE ,
+        C.COMPANY_HIERARCHY_PATH,
+        ACT.TYPE_HIERARCHY_PATH        
+  FROM  ADMIN_COMPANY C,              
+        SYS_USERS SU,              
+        ADMIN_COMPANY_TYPE ACT,              
+        SYS_USER_COMPANY SUC              
+ WHERE  SU.USER_ID=SUC.USER_ID              
+   AND  C.COMP_CODE=SUC.COMPANY_ID              
+   AND  C.ACTIVE='Y'              
+   AND  ACT.IS_ACTIVE='Y'
+   AND  SUC.IS_ACTIVE='Y'
+   AND  ACT.COMPANY_GROUP_SNO=5
+   AND  ACT.COMPANY_TYPE_SNO=C.COMPANY_TYPE_SNO              
+   AND  ACT.TYPE_LEVEL=(SELECT MAX(AAA.TYPE_LEVEL)              
+                        FROM  ADMIN_COMPANY_TYPE AAA              
+                        WHERE AAA.COMPANY_ID=C.GLOBAL_COMP_CODE
+                        AND   AAA.IS_ACTIVE='Y'
+                        )              
+   AND  SU.USER_ID=?/*2*/              
+   AND  NOT EXISTS(              
+                   SELECT ''              
+                   FROM   SYS_USERS_MODULE SUMM              
+                   WHERE  SUMM.MODULE_ACTION=?/*3 CURRENT CONENCTING MODULE ID BIND VARIABLE*/              
+                   AND    SUMM.ACCESS_TYPE IN('N','S','A')              
+                   AND    SUMM.IS_ACTIVE='Y'              
+                   AND    SUMM.USER_ID=SU.USER_ID              
+                  )              
+   AND  SU.ACCESS_TYPE IN('S','B')/* THIS WILL SHOW SELECTED USER AND GROUP LEVEL LOCATIONS*/
+  UNION              
+  /*FOR SELECTED ACCESS TYPE USER GROUP WISE*/              
+ SELECT   SAGU.USER_ID,              
+         SUS.USER_NAME,              
+         SUS.USER_CODE,              
+         ADCOM.COMPANY_NAME,              
+         ADCOM.COMPANY_SHORT_NAME,              
+         ADCOM.COMPANY_SHORT_CODE,              
+         SAGC.COMPANY_ID,    
+         3 QUERY_NO,    
+         ADCOM.GLOBAL_COMP_CODE,    
+         ADCOM.COMPANY_TYPE_SNO, 
+         ADCOM.PARENT_COMP_CODE ,
+         ADCOM.COMPANY_HIERARCHY_PATH,
+         ACT.TYPE_HIERARCHY_PATH         
+ FROM              
+         SYS_ACTION_GROUP_HEADER SAGH,              
+         SYS_ACTION_GROUP_COMPANY SAGC,              
+         SYS_ACTION_GROUP_USER SAGU,              
+         SYS_USERS SUS,              
+         ADMIN_COMPANY ADCOM,
+         ADMIN_COMPANY_TYPE ACT
+ WHERE   SAGH.GROUP_HEADER_SNO=SAGC.GROUP_HEADER_SNO              
+ AND     SAGC.GROUP_HEADER_SNO=SAGU.GROUP_HEADER_SNO              
+ AND     SAGC.COMPANY_ID=ADCOM.COMP_CODE
+ AND     SUS.USER_ID=SAGU.USER_ID
+ AND     ADCOM.COMPANY_TYPE_SNO=ACT.COMPANY_TYPE_SNO
+ AND     SAGU.IS_ACTIVE  ='Y'
+ AND     SAGC.IS_ACTIVE  ='Y'          
+ AND     SAGH.IS_ACTIVE  ='Y'
+ AND     ACT.COMPANY_GROUP_SNO=5
+ AND     ADCOM.ACTIVE='Y'
+ AND     SUS.ACCESS_TYPE IN('G','B')/*ACCESS TYPE AT USER LEVEL*/              
+ AND     SAGH.ACCESS_TYPE='S' /*SELECTED LOCATIONS FOR THIS GROUP*/              
+ AND     SUS.USER_ID=?/*4*/              
+ AND     EXISTS              
+         (              
+         SELECT ''              
+         FROM   SYS_ACTION_GROUP_LINES SACLL              
+         WHERE  SACLL.GROUP_HEADER_SNO=SAGH.GROUP_HEADER_SNO              
+         AND    SACLL.MODULE_ACTION=?/*5*/              
+         AND    SACLL.ACCESS_TYPE IN('G')              
+         AND    SACLL.IS_ACTIVE='Y'              
+         )              
+ AND  NOT EXISTS(              
+          SELECT ''              
+          FROM   SYS_USERS_MODULE SUMM              
+          WHERE  SUMM.MODULE_ACTION=?/*6 CURRENT CONENCTING MODULE ID BIND VARIABLE*/              
+          AND    SUMM.ACCESS_TYPE IN('N','S','A')              
+          AND    SUMM.IS_ACTIVE='Y'              
+          AND    SUMM.USER_ID=SUS.USER_ID              
+          )              
+ AND     ? /*7*/ BETWEEN SAGH.START_DATE AND COALESCE(SAGH.END_DATE,?)/*8*/              
+              
+UNION              
+/* GROUP LEVEL ALL COMPANIES*/              
+SELECT   SAGU.USER_ID,              
+         SUS.USER_NAME,              
+         SUS.USER_CODE,              
+         ACOM.COMPANY_NAME,              
+         ACOM.COMPANY_SHORT_NAME,              
+         ACOM.COMPANY_SHORT_CODE,              
+         ACOM.COMP_CODE,    
+         4 QUERY_NO,    
+         ACOM.GLOBAL_COMP_CODE,    
+         ACT.COMPANY_TYPE_SNO   , 
+         ACOM.PARENT_COMP_CODE ,
+         ACOM.COMPANY_HIERARCHY_PATH,
+         ACT.TYPE_HIERARCHY_PATH         
+         
+ FROM              
+         SYS_ACTION_GROUP_HEADER SAGH,              
+         SYS_ACTION_GROUP_USER SAGU,              
+         ADMIN_COMPANY ACOM,              
+         SYS_USERS SUS,              
+         SYS_USER_GLOBAL_COMPANY SUGC,              
+         ADMIN_COMPANY_TYPE ACT              
+ WHERE   ACOM.GLOBAL_COMP_CODE=SUGC.COMPANY_ID
+ AND     SAGH.GROUP_HEADER_SNO=SAGU.GROUP_HEADER_SNO
+ AND     SAGU.USER_ID=SUS.USER_ID
+ AND     SUGC.USER_ID=SUS.USER_ID              
+ AND     SUGC.IS_ACTIVE='Y'              
+ AND     SAGU.IS_ACTIVE='Y'              
+ AND     SAGH.IS_ACTIVE='Y'
+ AND     ACOM.ACTIVE='Y'
+ AND     ACT.COMPANY_GROUP_SNO=5
+ AND     SUGC.IS_DEFAULT='Y'
+ AND     SAGH.GROUP_HEADER_SNO=SAGU.GROUP_HEADER_SNO              
+ AND     ACOM.COMPANY_TYPE_SNO=ACT.COMPANY_TYPE_SNO              
+ AND     ACT.TYPE_LEVEL=(SELECT MAX(CT.TYPE_LEVEL)              
+                         FROM   ADMIN_COMPANY_TYPE CT              
+                         WHERE  CT.COMPANY_ID=SUGC.COMPANY_ID
+                         AND    CT.IS_ACTIVE='Y'
+                         )              
+ AND     SUS.ACCESS_TYPE IN('G','B')              
+ AND     SAGH.ACCESS_TYPE='A'/*ALL LOCATION FOR THIS GROUP*/              
+ AND     SUS.USER_ID=?/*9*/              
+ AND     EXISTS              
+         (              
+         SELECT ''              
+         FROM   SYS_ACTION_GROUP_LINES SACLL              
+         WHERE  SACLL.GROUP_HEADER_SNO=SAGH.GROUP_HEADER_SNO              
+         AND    SACLL.MODULE_ACTION=?/*10*/              
+         AND    SACLL.ACCESS_TYPE IN('G')              
+         AND    SACLL.IS_ACTIVE='Y'              
+         )              
+ AND  NOT EXISTS              
+          (              
+          SELECT ''              
+          FROM   SYS_USERS_MODULE SUMM              
+          WHERE  SUMM.MODULE_ACTION=?/*11 CURRENT CONENCTING MODULE ID BIND VARIABLE*/              
+          AND    SUMM.ACCESS_TYPE IN('N','S','A')              
+          AND    SUMM.IS_ACTIVE='Y'              
+          AND    SUMM.USER_ID=SUS.USER_ID              
+          )              
+ AND     ? /*12*/ BETWEEN SAGH.START_DATE AND coalesce(SAGH.END_DATE,?)/*13*/              
+ UNION              
+ /*SYS USER MODULE WISE ALL LOCATIONS*/              
+ SELECT  SU.USER_ID,              
+        SU.USER_NAME,              
+        SU.USER_CODE,              
+        C.COMPANY_NAME,              
+        C.COMPANY_SHORT_NAME,              
+        C.COMPANY_SHORT_CODE,              
+        C.COMP_CODE,    
+        5 QUERY_NO,    
+        C.GLOBAL_COMP_CODE,    
+        C.COMPANY_TYPE_SNO, 
+        C.PARENT_COMP_CODE ,
+        C.COMPANY_HIERARCHY_PATH,
+        ACT.TYPE_HIERARCHY_PATH         
+        
+  FROM  ADMIN_COMPANY C,              
+        SYS_USER_GLOBAL_COMPANY SUGC,/*WHICH PARENT USER HAS IN CASE OF MULTIPLE GLOBALS*/              
+        SYS_USERS SU,              
+        ADMIN_COMPANY_TYPE ACT,              
+        SYS_USERS_MODULE SUMM              
+ WHERE  C.GLOBAL_COMP_CODE = SUGC.COMPANY_ID              
+   AND  SUGC.USER_ID = SU.USER_ID              
+   AND  SUMM.USER_ID=SU.USER_ID              
+   AND  SUMM.MODULE_ACTION=?/*14*/              
+   AND  C.ACTIVE='Y'              
+   AND  SUGC.IS_ACTIVE='Y'
+   AND  SUGC.IS_DEFAULT='Y'
+   AND  SUMM.ACCESS_TYPE='A'              
+   AND  SUMM.IS_ACTIVE='Y'
+   AND  ACT.IS_ACTIVE='Y'
+   AND  ACT.COMPANY_GROUP_SNO=5
+   AND  ACT.COMPANY_TYPE_SNO=C.COMPANY_TYPE_SNO              
+   AND  ACT.TYPE_LEVEL=(SELECT MAX(AAA.TYPE_LEVEL)              
+                        FROM  ADMIN_COMPANY_TYPE AAA              
+                        WHERE AAA.COMPANY_ID=C.GLOBAL_COMP_CODE              
+                        AND  AAA.IS_ACTIVE='Y' 
+                        )              
+   AND  SU.USER_ID=?/*15*/              
+   UNION              
+ /*SYS USER MODULE WISE SELECTED LOCATIONS*/              
+ SELECT SU.USER_ID,              
+        SU.USER_NAME,              
+        SU.USER_CODE,              
+        C.COMPANY_NAME,              
+        C.COMPANY_SHORT_NAME,              
+        C.COMPANY_SHORT_CODE,              
+        C.COMP_CODE,    
+        6 QUERY_NO,    
+        C.GLOBAL_COMP_CODE,    
+        C.COMPANY_TYPE_SNO, 
+        C.PARENT_COMP_CODE ,
+        C.COMPANY_HIERARCHY_PATH,
+        ACT.TYPE_HIERARCHY_PATH
+  FROM  ADMIN_COMPANY C,              
+        SYS_USERS SU,              
+        SYS_USERS_MODULE SUMM,              
+        SYS_USERS_MODULE_COMPANY SUMC,
+        ADMIN_COMPANY_TYPE   ACT
+ WHERE  SUMM.USER_ID=SU.USER_ID              
+   AND  SUMM.MODULE_ACTION=?/*16*/              
+   AND  SUMM.USERS_MODULE_SNO=SUMC.USERS_MODULE_SNO              
+   AND  C.COMP_CODE=SUMC.COMPANY_ID 
+   AND  C.COMPANY_TYPE_SNO=ACT.COMPANY_TYPE_SNO
+   AND  C.ACTIVE='Y'              
+   AND  SU.USER_ID=?/*17*/              
+   AND  SUMM.ACCESS_TYPE='S'              
+   AND  SUMM.IS_ACTIVE='Y' 
+   AND  SUMC.IS_ACTIVE='Y'
+   AND  ACT.COMPANY_GROUP_SNO=5
+   UNION              
+   /*group ACTION SELECTED locations*/              
+    SELECT  SU.USER_ID,              
+        SU.USER_NAME,              
+        SU.USER_CODE,              
+        C.COMPANY_NAME,              
+        C.COMPANY_SHORT_NAME,              
+        C.COMPANY_SHORT_CODE,              
+        C.COMP_CODE,    
+        7 QUERY_NO,    
+        C.GLOBAL_COMP_CODE,    
+        C.COMPANY_TYPE_SNO   , 
+        C.PARENT_COMP_CODE ,
+        C.COMPANY_HIERARCHY_PATH,
+        ACT.TYPE_HIERARCHY_PATH
+  FROM  ADMIN_COMPANY C,              
+        SYS_USERS SU,              
+        SYS_ACTION_GROUP_LINES SAGL,              
+        SYS_ACTION_GROUP_HEADER SAGH,              
+        SYS_ACTION_GROUP_LINES_COMPANY SAGLC,              
+        SYS_ACTION_GROUP_USER SAGU,
+        ADMIN_COMPANY_TYPE ACT
+ WHERE  SAGH.GROUP_HEADER_SNO=SAGL.GROUP_HEADER_SNO              
+   AND  SAGL.GROUP_LINES_SNO=SAGLC.GROUP_LINES_SNO              
+   AND  SAGU.GROUP_HEADER_SNO=SAGH.GROUP_HEADER_SNO              
+   AND  SAGU.USER_ID=SU.USER_ID              
+   AND  SAGLC.COMPANY_ID=C.COMP_CODE
+   AND  C.COMPANY_TYPE_SNO=ACT.COMPANY_TYPE_SNO
+   AND  ACT.COMPANY_GROUP_SNO=5
+   AND  NOT EXISTS(              
+                   SELECT ''              
+                   FROM   SYS_USERS_MODULE SUMM              
+                   WHERE  SUMM.MODULE_ACTION=?/*18 CURRENT CONENCTING MODULE ID BIND VARIABLE*/              
+                   AND    SUMM.ACCESS_TYPE IN('N','S','A')              
+                   AND    SUMM.IS_ACTIVE='Y'              
+                   AND    SUMM.USER_ID=SU.USER_ID              
+                  )              
+   AND  SAGL.MODULE_ACTION=?/*19*/              
+   AND  C.ACTIVE='Y'              
+   AND  SAGH.IS_ACTIVE='Y'
+   AND  SAGL.IS_ACTIVE='Y'
+   AND  SAGU.IS_ACTIVE='Y'
+   AND  SAGLC.IS_ACTIVE='Y'
+   AND  SU.USER_ID=?/*20*/              
+   AND  SAGL.ACCESS_TYPE='S'
+   AND  SU.ACCESS_TYPE IN('B','G')/* USER LEVEL ACCESS TYPE SHOULD BE IN BOTH OR GROUP*/              
+   AND  ? /*21*/ BETWEEN SAGH.START_DATE AND COALESCE(SAGH.END_DATE,?) /*22*/              
+  union              
+   /*group ACTION ALL locations*/              
+    SELECT  SU.USER_ID,              
+        SU.USER_NAME,              
+        SU.USER_CODE,              
+        C.COMPANY_NAME,              
+        C.COMPANY_SHORT_NAME,              
+        C.COMPANY_SHORT_CODE,              
+        C.COMP_CODE,    
+        8 QUERY_NO,    
+        C.GLOBAL_COMP_CODE,    
+        C.COMPANY_TYPE_SNO, 
+        C.PARENT_COMP_CODE ,
+        C.COMPANY_HIERARCHY_PATH,
+        ACT.TYPE_HIERARCHY_PATH
+  FROM  ADMIN_COMPANY C,              
+        SYS_USERS SU,              
+        SYS_ACTION_GROUP_LINES SAGL,              
+        SYS_ACTION_GROUP_HEADER SAGH,              
+        SYS_ACTION_GROUP_USER SAGU,              
+        SYS_USER_GLOBAL_COMPANY SUGC,              
+        ADMIN_COMPANY_TYPE ACT              
+ WHERE  SAGH.GROUP_HEADER_SNO=SAGL.GROUP_HEADER_SNO              
+   AND  SAGU.GROUP_HEADER_SNO=SAGH.GROUP_HEADER_SNO              
+   AND  SUGC.COMPANY_ID=C.GLOBAL_COMP_CODE              
+   AND  SUGC.IS_ACTIVE='Y'
+   AND  SUGC.IS_DEFAULT='Y'
+   AND  SAGL.IS_ACTIVE='Y'
+   AND  SAGH.IS_ACTIVE='Y'
+   AND  SAGU.IS_ACTIVE='Y'
+   AND  SUGC.IS_ACTIVE='Y'
+   AND  ACT.IS_ACTIVE='Y'
+   AND  C.ACTIVE='Y'              
+   AND  SUGC.USER_ID=SAGU.USER_ID              
+   AND  SAGU.USER_ID=SU.USER_ID              
+   AND  ACT.COMPANY_GROUP_SNO=5
+   AND  ACT.COMPANY_TYPE_SNO=C.COMPANY_TYPE_SNO              
+   AND  ACT.TYPE_LEVEL=(SELECT MAX(AAA.TYPE_LEVEL)              
+                        FROM  ADMIN_COMPANY_TYPE AAA              
+                        WHERE AAA.COMPANY_ID=C.GLOBAL_COMP_CODE 
+                        AND AAA.IS_ACTIVE='Y'
+                        )              
+   AND  NOT EXISTS(              
+                   SELECT ''              
+                   FROM   SYS_USERS_MODULE SUMM              
+                   WHERE  SUMM.MODULE_ACTION=SAGL.MODULE_ACTION/* CURRENT CONENCTING MODULE ID BIND VARIABLE*/              
+                   AND    SUMM.ACCESS_TYPE IN('N','S','A')              
+                   AND    SUMM.IS_ACTIVE='Y'              
+                   AND    SUMM.USER_ID=SU.USER_ID              
+                  )              
+   AND  SAGL.MODULE_ACTION=?/*23*/              
+   AND  SU.USER_ID=?/*24*/              
+   AND  SAGL.ACCESS_TYPE='A'              
+   AND  SU.ACCESS_TYPE IN('B','G')/* USER LEVEL ACCESS TYPE SHOULD BE IN BOTH OR GROUP*/              
+   AND  ? /*25*/ BETWEEN SAGH.START_DATE AND COALESCE(SAGH.END_DATE,?)/*26*/]]></SQLQuery>
+  <ViewAttribute
+    Name="UserId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    AliasName="USER_ID"
+    Expression="USER_ID"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="UserName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="USER_NAME"
+    Expression="USER_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UserCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="USER_CODE"
+    Expression="USER_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CompanyName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="COMPANY_NAME"
+    Expression="COMPANY_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CompanyShortName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="COMPANY_SHORT_NAME"
+    Expression="COMPANY_SHORT_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CompanyShortCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="COMPANY_SHORT_CODE"
+    Expression="COMPANY_SHORT_CODE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CompCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="COMP_CODE"
+    Expression="COMP_CODE"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="QueryNo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="QUERY_NO"
+    Expression="QUERY_NO"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="GlobalCompCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="10"
+    Scale="0"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="GLOBAL_COMP_CODE"
+    Expression="GLOBAL_COMP_CODE"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="CompanyTypeSno"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Scale="0"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="COMPANY_TYPE_SNO"
+    Expression="COMPANY_TYPE_SNO"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="ParentCompCode"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Scale="0"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="PARENT_COMP_CODE"
+    Expression="PARENT_COMP_CODE"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="CompanyHierarchyPath"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="COMPANY_HIERARCHY_PATH"
+    Expression="COMPANY_HIERARCHY_PATH"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TypeHierarchyPath"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    AliasName="TYPE_HIERARCHY_PATH"
+    Expression="TYPE_HIERARCHY_PATH"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="UserId"/>
+    <Item Value="CompCode"/>
+    <Item Value="QueryNo"/>
+  </AttrArray>
+  <ClientInterface
+    Name="__clientInterface">
+    <Method
+      Name="ErpdoInsertAccessableCompany"
+      MethodName="ErpdoInsertAccessableCompany">
+      <Return
+        Name="_return_type_"
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="erpglobals.modelglobals.ModelGlobalsBundle"/>
+  </ResourceBundle>
+</ViewObject>

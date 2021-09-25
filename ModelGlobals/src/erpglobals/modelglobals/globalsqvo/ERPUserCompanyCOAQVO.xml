@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ERPUserCompanyCOAQVO"
+  Version="12.1.3.10.47"
+  InheritPersonalization="merge"
+  BindingStyle="JDBC"
+  CustomQuery="true"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="erpglobals.modelglobals.globalsqvo.ERPUserCompanyCOAQVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="P_ADF_USER_ID"
+    Kind="where"
+    Type="java.lang.Integer">
+    <AttrArray Name="ExtendedDataInts">
+      <Item Value="0"/>
+    </AttrArray>
+    <TransientExpression
+      Name="expression"><![CDATA[erpglobals.modelglobals.ERPGlobalPLSQLClass.doGetModelUserSno()]]></TransientExpression>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
+  <SQLQuery><![CDATA[select coa.company_id, 
+       coa.global_company_id 
+from   gl_coa_user_company coa 
+where  coa.is_active='Y' 
+and    coa.user_id  =?]]></SQLQuery>
+  <ViewAttribute
+    Name="CompanyId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    AliasName="COMPANY_ID"
+    Expression="COMPANY_ID"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="GlobalCompanyId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="5"
+    Scale="0"
+    Type="java.lang.Integer"
+    ColumnType="NUMBER"
+    AliasName="GLOBAL_COMPANY_ID"
+    Expression="GLOBAL_COMPANY_ID"
+    SQLType="INTEGER"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="CompanyId"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="erpglobals.modelglobals.ModelGlobalsBundle"/>
+  </ResourceBundle>
+</ViewObject>
