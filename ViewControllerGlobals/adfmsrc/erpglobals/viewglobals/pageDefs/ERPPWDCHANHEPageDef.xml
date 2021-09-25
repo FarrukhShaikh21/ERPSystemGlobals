@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.47" id="ERPPWDCHANHEPageDef"
+                Package="erpglobals.viewglobals.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ErpUserPolicyInformationRO" RangeSize="25" DataControl="ERPGlobalsModuleDataControl"
+              id="ErpUserPolicyInformationROIterator"/>
+    <iterator Binds="SysUsersRO" RangeSize="1" DataControl="ERPGlobalsModuleDataControl" id="SysUsersROIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="ErpUserPolicyInformationROIterator" id="ErpUserPolicyInformationRO">
+      <nodeDefinition DefName="erpglobals.modelglobals.globalsqvo.ErpUserPolicyInformationQVO"
+                      Name="ErpUserPolicyInformationRO0">
+        <AttrNames>
+          <Item Value="PasswordParameterName"/>
+          <Item Value="PasswordParameterValue"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction IterBinding="SysUsersROIterator" id="doERPChangePassword" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="doERPChangePassword" IsViewObjectMethod="false"
+                  DataControl="ERPGlobalsModuleDataControl" InstanceName="bindings.SysUsersROIterator.currentRow"
+                  IsLocalObjectReference="true"
+                  ReturnName="data.ERPGlobalsModuleDataControl.methodResults.doERPChangePassword_doERPChangePassword_doERPChangePassword_result"/>
+    <attributeValues IterBinding="SysUsersROIterator" id="txtErpConfirmPassword">
+      <AttrNames>
+        <Item Value="txtErpConfirmPassword"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SysUsersROIterator" id="txtErpNewPassword">
+      <AttrNames>
+        <Item Value="txtErpNewPassword"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SysUsersROIterator" id="txtErpCurrentPassword">
+      <AttrNames>
+        <Item Value="txtErpCurrentPassword"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SysUsersROIterator" id="UserCode">
+      <AttrNames>
+        <Item Value="UserCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SysUsersROIterator" id="txtErpPwdStrength">
+      <AttrNames>
+        <Item Value="txtErpPwdStrength"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

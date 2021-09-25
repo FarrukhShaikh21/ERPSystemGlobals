@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="ERPCHPWDBTF">
+    <default-activity>doSetERPGlobals</default-activity>
+    <data-control-scope>
+      <shared/>
+    </data-control-scope>
+    <task-flow-reentry>
+      <reentry-not-allowed/>
+    </task-flow-reentry>
+    <input-parameter-definition id="__6">
+      <name>P_ADF_USER_ID</name>
+      <value>#{pageFlowScope.ERPGlobalSysBean.erpUserId}</value>
+      <class>erpglobals.viewglobals.ERPGlobalsClass</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__7">
+      <name>P_ADF_USER_CODE</name>
+      <value>#{pageFlowScope.ERPGlobalSysBean.erpUserCode}</value>
+      <class>erpglobals.viewglobals.ERPGlobalsClass</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__10">
+      <name>P_ADF_USER_ATTRIBUTE</name>
+      <value>#{pageFlowScope.ERPGlobalSysBean.ERPUserAttributes}</value>
+      <class>erpglobals.viewglobals.ERPGlobalsClass</class>
+    </input-parameter-definition>
+    <managed-bean id="__3">
+      <managed-bean-name>ERPGlobalSysBean</managed-bean-name>
+      <managed-bean-class>erpglobals.viewglobals.ERPGlobalsClass</managed-bean-class>
+      <managed-bean-scope>pageFlow</managed-bean-scope>
+    </managed-bean>
+    <task-flow-return id="ERPACTReturnPWDCHANGE">
+      <outcome>
+        <name>ERPACTReturnPWDCHANGE</name>
+      </outcome>
+    </task-flow-return>
+    <view id="ERPPWDCHANHE">
+      <page>/ERPPWDCHANHE.jsf</page>
+    </view>
+    <view id="ICONE_PAGE">
+      <page>/ICONE_PAGE.jsf</page>
+    </view>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome>
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="doSetERPGlobals">
+      <method>#{pageFlowScope.ERPGlobalSysBean.doSetErpGlobals}</method>
+      <outcome>
+        <fixed-outcome>doSetERPGlobals</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="ErpdoInsertAccessableCompany">
+      <method>#{bindings.ErpdoInsertAccessableCompany.execute}</method>
+      <outcome>
+        <fixed-outcome>ErpdoInsertAccessableCompany</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__1">
+      <from-activity-id>ERPPWDCHANHE</from-activity-id>
+      <control-flow-case id="__2">
+        <from-outcome>ERPACTPWDCHANGEDONE</from-outcome>
+        <to-activity-id>ERPACTReturnPWDCHANGE</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__4">
+      <from-activity-id>Execute</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome>Execute</from-outcome>
+        <to-activity-id>ERPPWDCHANHE</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__8">
+      <from-activity-id>doSetERPGlobals</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome>doSetERPGlobals</from-outcome>
+        <to-activity-id>Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__11">
+      <from-activity-id>ErpdoInsertAccessableCompany</from-activity-id>
+      <control-flow-case id="__12">
+        <from-outcome>ErpdoInsertAccessableCompany</from-outcome>
+        <to-activity-id>ICONE_PAGE</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <visibility/>
+  </task-flow-definition>
+</adfc-config>
