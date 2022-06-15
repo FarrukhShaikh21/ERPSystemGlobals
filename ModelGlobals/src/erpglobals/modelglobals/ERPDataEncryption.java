@@ -20,8 +20,8 @@ public class ERPDataEncryption {
  
  public static void main(String[] args) {
         try {
-            ERPdoEncrypt("DgMCm786");
-            ERPdoDecrypt(ERPdoEncrypt("DgMCm786"));
+//            ERPdoEncrypt("DgMCm786");
+//            ERPdoDecrypt("4A0A93688CBF7D1155F9F5C29D9F22B5");
             //2vCbqN65k8ld7kAndNMkgQ==
             //djJ9EGKW3TiqBsOcvfNsWQ==
         } catch (Exception e) {

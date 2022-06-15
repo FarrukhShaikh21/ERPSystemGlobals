@@ -83,7 +83,7 @@ public class ErpUserCompanyAccessQVOImpl extends ViewObjectImpl implements ErpUs
           
       }
        else {
-          CallableStatement cs = getDBTransaction().createCallableStatement("call new_procedure(1)", 1); 
+//          CallableStatement cs = getDBTransaction().createCallableStatement("call new_procedure(1)", 1); 
             ERPGlobalPLSQLClass.doErpExecutePLSQLModel(getDBTransaction(),"call proc_set_user_location_access("+erpglobals.modelglobals.ERPGlobalPLSQLClass.doGetModelUserSno()+",'"+erpglobals.modelglobals.ERPGlobalPLSQLClass.doGetErpModuleAction()+"',"+erpglobals.modelglobals.ERPGlobalPLSQLClass.doGetModelGlobalDefCompany()+")", "N");  
           
 //          ERPGlobalPLSQLClass.doErpExecutePLSQLModel(getDBTransaction(),"DROP temporary TABLE IF EXISTS temp_admin_company_access", "N");  
