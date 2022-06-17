@@ -1,14 +1,22 @@
 package erpglobals.modelglobals;
 
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+import java.sql.Types;
+
 import oracle.jbo.AttributeList;
 import oracle.jbo.server.EntityImpl;
 import oracle.jbo.server.TransactionEvent;
+
 
 public class ERPEntityImpl extends EntityImpl {
     public ERPEntityImpl() {
         super();
     }
 
+    String ERPTableName;
+    Integer ERPPrimaryKeyColumn=null;
+    
     @Override
     protected void create(AttributeList attributeList) {
         // TODO Implement this method
@@ -82,6 +90,53 @@ public class ERPEntityImpl extends EntityImpl {
             }        
         }
         super.doDML(i, transactionEvent);
+    }
+    
+    public void doERPSetPrimaryKeyValue() {
+    //checking if any sequence name is given or not
+        ERPTableName=(ERPTableName==null?this.getEntityDef().getSource()+"_SEQ":ERPTableName);
+        CallableStatement cs=getDBTransaction().createCallableStatement("call proc_get_sequence_no('"+ERPTableName+"',?)", 1);
+        try {
+            cs.registerOutParameter(1, Types.INTEGER);
+            cs.executeUpdate();
+            for (int i = 0; i < this.getEntityDef().getAttributeCount(); i++) {
+                if (this.getEntityDef().getAttributeDefs()[i].isPrimaryKey() ||ERPPrimaryKeyColumn !=null) {
+                    
+                    ERPPrimaryKeyColumn=this.getEntityDef().getAttributeDefs()[i].getIndex();
+                    setAttribute(ERPPrimaryKeyColumn, cs.getInt(1));
+                    ERPPrimaryKeyColumn=null;
+                    ERPTableName=null;
+                break;
+                }
+            }
+
+        } catch (SQLException sqle) {
+            // TODO: Add catch code
+            sqle.printStackTrace();
+        }
+        finally{
+            try {
+                cs.close();
+            } catch (SQLException e) {
+            }
+        }
+    }
+
+
+    public void setERPTableName(String ERPTableName) {
+        this.ERPTableName = ERPTableName;
+    }
+
+    public String getERPTableName() {
+        return ERPTableName;
+    }
+
+    public void setERPPrimaryKeyColumn(Integer ERPPrimaryKeyColumn) {
+        this.ERPPrimaryKeyColumn = ERPPrimaryKeyColumn;
+    }
+
+    public Integer getERPPrimaryKeyColumn() {
+        return ERPPrimaryKeyColumn;
     }
 
 }
