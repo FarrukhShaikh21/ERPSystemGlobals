@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import oracle.jbo.AttributeList;
+import oracle.jbo.JboException;
 import oracle.jbo.server.EntityImpl;
 import oracle.jbo.server.TransactionEvent;
 
@@ -14,13 +15,14 @@ public class ERPEntityImpl extends EntityImpl {
         super();
     }
 
-    String ERPTableName;
-    Integer ERPPrimaryKeyColumn=null;
+    String ERPTableName;///table name of current transactuib
+    Integer ERPPrimaryKeyColumn=null;//primary key column of transaction table
+    String ERPGenerateSequence="ERPYES";
     
     @Override
     protected void create(AttributeList attributeList) {
         // TODO Implement this method
-        super.create(attributeList);
+        
         try {
             setAttribute("IsSupervised", "N");
             
@@ -37,7 +39,11 @@ public class ERPEntityImpl extends EntityImpl {
            } catch (Exception e) {
                 // TODO: Add catch code
                 
-            }       
+            }
+        if (getERPGenerateSequence().equals("ERPYES")) {//checking need to generte sequence or not
+            doERPSetPrimaryKeyValue();
+        }
+        super.create(attributeList);
     }
 
     @Override
@@ -95,28 +101,39 @@ public class ERPEntityImpl extends EntityImpl {
     public void doERPSetPrimaryKeyValue() {
     //checking if any sequence name is given or not
         ERPTableName=(ERPTableName==null?this.getEntityDef().getSource()+"_SEQ":ERPTableName);
-        CallableStatement cs=getDBTransaction().createCallableStatement("call proc_get_sequence_no('"+ERPTableName+"',?)", 1);
+        
+        CallableStatement ERPcs;
+        String ErpTransType= ERPGlobalPLSQLClass.doErpGetConnTypeModel(getDBTransaction());
+       
+        if (ErpTransType.equals("ERPORACLE")) {
+            ERPcs =
+                getDBTransaction().createCallableStatement("begin proc_get_sequence_no('" + ERPTableName +
+                                                           "',?); end; ", 1);
+        } else {
+            ERPcs = getDBTransaction().createCallableStatement("call proc_get_sequence_no('" + ERPTableName + "',?)", 1);
+        }
+        
         try {
-            cs.registerOutParameter(1, Types.INTEGER);
-            cs.executeUpdate();
+            ERPcs.registerOutParameter(1, Types.INTEGER);
+            ERPcs.executeUpdate();
             for (int i = 0; i < this.getEntityDef().getAttributeCount(); i++) {
+                //checking primary column or if have passet the primary key column then system will work accordingly
                 if (this.getEntityDef().getAttributeDefs()[i].isPrimaryKey() ||ERPPrimaryKeyColumn !=null) {
-                    
                     ERPPrimaryKeyColumn=this.getEntityDef().getAttributeDefs()[i].getIndex();
-                    setAttribute(ERPPrimaryKeyColumn, cs.getInt(1));
+                    setAttribute(ERPPrimaryKeyColumn, ERPcs.getInt(1));//assigning the sequence to column
                     ERPPrimaryKeyColumn=null;
                     ERPTableName=null;
-                break;
+                    break;
                 }
             }
 
         } catch (SQLException sqle) {
             // TODO: Add catch code
-            sqle.printStackTrace();
+            throw new JboException("Unable To Create New Record"+sqle.getMessage());
         }
         finally{
             try {
-                cs.close();
+                ERPcs.close();
             } catch (SQLException e) {
             }
         }
@@ -139,4 +156,11 @@ public class ERPEntityImpl extends EntityImpl {
         return ERPPrimaryKeyColumn;
     }
 
+    public void setERPGenerateSequence(String ERPGenerateSequence) {
+        this.ERPGenerateSequence = ERPGenerateSequence;
+    }
+
+    public String getERPGenerateSequence() {
+        return ERPGenerateSequence;
+    }
 }
