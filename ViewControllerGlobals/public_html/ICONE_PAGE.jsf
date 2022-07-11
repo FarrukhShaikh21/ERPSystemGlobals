@@ -3,7 +3,7 @@
 <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
     <af:document title="ICONE_PAGE.jsf" id="d1">
         <af:form id="f1">
-            <af:button id="b1" icon="#{resource['images:imgTotalQuantity.png']}"/>
+            <af:button id="b1" icon="#{resource['images:imgStatus.png']}"/>
         </af:form>
     </af:document>
 </f:view>
